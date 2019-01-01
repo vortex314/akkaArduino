@@ -12,19 +12,16 @@ ActorMsgBus eb;
 WiFiClient espClient;
 PubSubClient client(espClient);
 const char* ssid = "Merckx3";
-const char* password = "LievenMarletteEwoutRonald";
 const char* mqtt_server = "limero.ddns.net";
 
-  Mailbox defaultMailbox("default", 100); // nbr of messages in queue max
+Mailbox defaultMailbox("default", 100); // nbr of messages in queue max
 MessageDispatcher defaultDispatcher;
 ActorSystem actorSystem("ESP-ARDUINO", defaultDispatcher, defaultMailbox);
-  ActorRef sender = actorSystem.actorOf<Echo>("echo");
-  ActorRef mqtt = actorSystem.actorOf<Mqtt>("mqtt", "tcp://limero.ddns.net:1883",&client);
-  ActorRef bridge = actorSystem.actorOf<Bridge>("bridge",mqtt);
-    ActorRef sys = actorSystem.actorOf<System>("system",mqtt);
-
-  ActorRef publisher = actorSystem.actorOf<Publisher>("publisher",mqtt);
-
+ActorRef sender = actorSystem.actorOf<Echo>("echo");
+ActorRef mqtt = actorSystem.actorOf<Mqtt>("mqtt", "tcp://limero.ddns.net:1883",&client);
+ActorRef bridge = actorSystem.actorOf<Bridge>("bridge",mqtt);
+ActorRef sys = actorSystem.actorOf<System>("system",mqtt);
+ActorRef publisher = actorSystem.actorOf<Publisher>("publisher",mqtt);
 
 void setup() {
   Serial.begin(115200);
